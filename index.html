@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f3eb" />
+  <meta name="description" content="Không gian học tập Ngữ văn 12: thư viện tác phẩm Kết nối tri thức, đếm ngược kỳ thi và câu hỏi ôn luyện." />
+  <title>Trang Văn 12 | Không gian học tập</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f7f3eb;
+      --paper-2: #fffdf8;
+      --ink: #24252c;
+      --muted: #74716c;
+      --wine: #803b4c;
+      --wine-dark: #5d2938;
+      --gold: #c69752;
+      --line: #e8dfd2;
+      --sage: #dce5dc;
+      --shadow: 0 18px 50px rgba(64, 43, 33, .08);
+      --serif: "Lora", Georgia, "Times New Roman", serif;
+      --sans: "Be Vietnam Pro", "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    .site-header { position: sticky; top: 0; z-index: 10; background: rgba(247,243,235,.92); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(128,59,76,.12); }
+    .nav { max-width: 1160px; margin: auto; min-height: 68px; padding: 0 24px; display:flex; align-items:center; justify-content:space-between; gap: 20px; }
+    .brand { display:flex; align-items:center; gap: 11px; font-family: var(--serif); font-weight: 700; color: var(--wine-dark); font-size: 1.12rem; text-decoration:none; white-space:nowrap; }
+    .brand-mark { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:var(--wine); color:white; font-family:var(--serif); font-size:1.2rem; }
+    .nav-links { display:flex; gap:24px; align-items:center; color:#625d57; font-size:.92rem; }
+    .nav-links a { text-decoration:none; }
+    .nav-links a:hover { color:var(--wine); }
+    .container { max-width:1160px; margin:auto; padding:0 24px; }
+    .hero { padding:54px 0 34px; }
+    .hero-grid { display:grid; grid-template-columns:1.04fr .96fr; gap:24px; }
+    .hero-main { position:relative; overflow:hidden; min-height:385px; padding:48px; border-radius:28px; color:#fffaf3; background:linear-gradient(130deg, rgba(66,34,43,.96), rgba(128,59,76,.93) 64%, rgba(161,105,83,.88)); box-shadow:var(--shadow); }
+    .hero-main:before, .hero-main:after { content:""; position:absolute; border:1px solid rgba(255,255,255,.16); border-radius:50%; pointer-events:none; }
+    .hero-main:before { width:350px; height:350px; right:-105px; top:-115px; }
+    .hero-main:after { width:240px; height:240px; right:-46px; top:-58px; }
+    .eyebrow { display:flex; gap:10px; align-items:center; letter-spacing:.16em; text-transform:uppercase; font-size:.72rem; font-weight:700; color:#e9c995; }
+    .eyebrow:before { content:""; width:28px; height:1px; background:currentColor; }
+    h1 { position:relative; z-index:1; margin:22px 0 14px; font: 500 clamp(2.6rem, 5vw, 4.6rem)/.98 var(--serif); letter-spacing:-.045em; }
+    .hero-lead { max-width:470px; color:rgba(255,250,243,.78); font-size:1rem; }
+    .hero-quote { position:absolute; left:48px; bottom:28px; font:italic 1.05rem var(--serif); color:#f0d9b7; }
+    .profile-card { padding:36px; border-radius:28px; background:var(--paper-2); border:1px solid var(--line); box-shadow:var(--shadow); display:flex; flex-direction:column; justify-content:center; }
+    .label { color:var(--wine); text-transform:uppercase; letter-spacing:.15em; font-size:.72rem; font-weight:800; }
+    .profile-card h2 { margin:10px 0 18px; font: 600 1.65rem var(--serif); }
+    .profile-list { display:grid; gap:0; }
+    .profile-row { display:flex; justify-content:space-between; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); font-size:.94rem; }
+    .profile-row:last-child { border-bottom:0; }
+    .profile-row span:first-child { color:var(--muted); }
+    .profile-row strong { text-align:right; font-weight:650; }
+    .countdown-wrap { padding:6px 0 48px; }
+    .countdown { display:grid; grid-template-columns:1fr auto; gap:30px; align-items:center; padding:28px 34px; border-radius:22px; background:#e8ede5; border:1px solid #d7e0d5; }
+    .countdown h2 { margin:0 0 4px; font:600 1.4rem var(--serif); color:#314138; }
+    .countdown p { margin:0; color:#69756b; font-size:.9rem; }
+    .timer { display:flex; gap:10px; }
+    .time-box { min-width:78px; padding:10px 11px 8px; text-align:center; border-radius:13px; background:rgba(255,255,255,.66); }
+    .time-box strong { display:block; font:600 1.75rem var(--serif); color:#314138; line-height:1.1; }
+    .time-box span { font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; color:#748076; }
+    .section { padding:32px 0 54px; }
+    .section-heading { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:22px; }
+    .section-heading h2 { margin:5px 0 0; font:600 clamp(1.9rem, 3vw, 2.55rem)/1.1 var(--serif); letter-spacing:-.025em; }
+    .section-heading p { margin:7px 0 0; color:var(--muted); max-width:620px; }
+    .small-note { color:var(--muted); font-size:.82rem; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:24px 0 20px; }
+    .search-box { position:relative; flex:1 1 250px; }
+    .search-box input, .toolbar select { width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--paper-2); color:var(--ink); outline:none; }
+    .search-box input:focus, .toolbar select:focus { border-color:var(--wine); box-shadow:0 0 0 3px rgba(128,59,76,.1); }
+    .toolbar select { width:auto; min-width:155px; }
+    .filter-chips { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+    .chip { border:1px solid var(--line); background:transparent; padding:8px 13px; border-radius:999px; cursor:pointer; color:#645e58; font-size:.88rem; transition:.2s; }
+    .chip:hover, .chip.active { background:var(--wine); color:white; border-color:var(--wine); }
+    .results-line { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:.85rem; margin:0 0 12px; }
+    .works-grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; }
+    .work-card { background:var(--paper-2); border:1px solid var(--line); border-radius:18px; padding:21px 22px 18px; box-shadow:0 7px 22px rgba(64,43,33,.035); transition:transform .2s, box-shadow .2s; }
+    .work-card:hover { transform:translateY(-2px); box-shadow:0 14px 30px rgba(64,43,33,.08); }
+    .work-top { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .work-title { margin:0; font:600 1.28rem/1.2 var(--serif); color:#352a2d; }
+    .author-line { margin:6px 0 12px; color:var(--wine); font-size:.88rem; }
+    .volume-tag { flex:0 0 auto; padding:5px 9px; background:#f2e8df; color:#815461; border-radius:999px; font-size:.72rem; font-weight:700; }
+    .work-meta { display:grid; gap:9px; }
+    .meta-item { font-size:.89rem; color:#55514c; }
+    .meta-item strong { display:block; margin-bottom:1px; color:#2d2c2c; font-size:.76rem; text-transform:uppercase; letter-spacing:.1em; }
+    .study-section { background:#eee8df; padding:56px 0 66px; }
+    .study-layout { display:grid; grid-template-columns:.75fr 1.25fr; gap:32px; align-items:start; }
+    .study-intro { position:sticky; top:96px; }
+    .study-intro h2 { margin:8px 0 12px; font:600 2.55rem/1.04 var(--serif); letter-spacing:-.03em; }
+    .study-intro p { color:#6f6861; }
+    .study-tip { margin-top:22px; padding:16px; border-left:3px solid var(--gold); background:rgba(255,255,255,.45); color:#635b54; font-size:.9rem; }
+    .quiz-card { background:var(--paper-2); border-radius:22px; padding:28px; border:1px solid #e2d8cc; box-shadow:var(--shadow); }
+    .quiz-progress { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:.86rem; margin-bottom:12px; }
+    .progress-track { height:6px; background:#eee8df; overflow:hidden; border-radius:999px; margin-bottom:22px; }
+    .progress-fill { height:100%; background:var(--wine); width:0%; transition:width .25s; }
+    .quiz-question { font:600 1.35rem/1.35 var(--serif); margin:0 0 18px; }
+    .answers { display:grid; gap:10px; }
+    .answer-btn { text-align:left; border:1px solid var(--line); background:white; color:#35312e; padding:13px 15px; border-radius:12px; cursor:pointer; transition:.18s; }
+    .answer-btn:hover:not(:disabled) { border-color:var(--wine); background:#fbf5f4; }
+    .answer-btn.correct { border-color:#5a8963; background:#e7f1e7; }
+    .answer-btn.wrong { border-color:#b76161; background:#fae9e6; }
+    .answer-btn:disabled { cursor:default; }
+    .quiz-feedback { min-height:28px; margin:14px 0 8px; font-size:.92rem; color:#4c6f50; }
+    .quiz-controls { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:14px; }
+    .quiz-score { color:var(--muted); font-size:.88rem; }
+    .primary-btn { border:0; border-radius:999px; padding:11px 18px; color:white; background:var(--wine); cursor:pointer; font-weight:650; }
+    .primary-btn:hover { background:var(--wine-dark); }
+    .primary-btn:disabled { background:#c7b9b5; cursor:not-allowed; }
+    .footer { padding:28px 0; background:#342d2d; color:#d9d0c8; }
+    .footer-inner { display:flex; justify-content:space-between; gap:20px; align-items:center; font-size:.85rem; }
+    .footer a { color:#ead0a5; }
+    .source-note { font-size:.78rem; opacity:.8; }
+    .empty-state { grid-column:1/-1; padding:40px; text-align:center; color:var(--muted); background:var(--paper-2); border:1px dashed var(--line); border-radius:18px; }
+    @media (max-width:800px) {
+      .hero-grid, .study-layout { grid-template-columns:1fr; }
+      .hero-main { min-height:340px; }
+      .study-intro { position:static; }
+      .nav-links { gap:12px; font-size:.84rem; }
+      .countdown { grid-template-columns:1fr; }
+      .timer { justify-content:flex-start; }
+    }
+    @media (max-width:600px) {
+      .container { padding:0 16px; }
+      .nav { padding:0 16px; min-height:60px; }
+      .nav-links a:nth-child(1) { display:none; }
+      .hero { padding-top:24px; }
+      .hero-main, .profile-card { padding:27px; border-radius:22px; }
+      .hero-main { min-height:335px; }
+      .hero-quote { left:27px; right:22px; bottom:22px; font-size:.95rem; }
+      .profile-row { font-size:.88rem; }
+      .countdown { padding:22px 18px; }
+      .timer { gap:6px; }
+      .time-box { min-width:0; flex:1; padding:9px 5px; }
+      .time-box strong { font-size:1.45rem; }
+      .time-box span { font-size:.61rem; }
+      .section { padding:26px 0 40px; }
+      .section-heading { display:block; }
+      .works-grid { grid-template-columns:1fr; }
+      .quiz-card { padding:20px; }
+      .study-intro h2 { font-size:2.15rem; }
+      .footer-inner { align-items:flex-start; flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a class="brand" href="#trang-chu"><span class="brand-mark" aria-hidden="true">V</span><span>Trang Văn 12</span></a>
+      <div class="nav-links"><a href="#thu-vien">Thư viện tác phẩm</a><a href="#on-luyen">Ôn luyện</a><a href="#dem-nguoc">Đếm ngược kỳ thi</a></div>
+    </nav>
+  </header>
+
+  <main id="trang-chu">
+    <section class="hero container" aria-labelledby="welcome-title">
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="eyebrow">Không gian học tập · 2026–2027</div>
+          <h1 id="welcome-title">Văn chương<br>và hành trình<br>trưởng thành.</h1>
+          <p class="hero-lead">Một góc nhỏ để đọc sâu, ghi nhớ những tác phẩm đáng quý và tự tin bước vào kỳ thi phía trước.</p>
+          <div class="hero-quote">“Văn học là nhân học.” <span>— M. Gorki</span></div>
+        </div>
+        <aside class="profile-card" aria-label="Thông tin học sinh">
+          <div class="label">Hồ sơ học tập</div>
+          <h2>MÔN NGỮ VĂN</h2>
+          <div class="profile-list">
+            <div class="profile-row"><span>Năm học</span><strong>2026–2027</strong></div>
+            <div class="profile-row"><span>Giáo viên</span><strong>Võ Thị Mỹ Ngà</strong></div>
+            <div class="profile-row"><span>Học sinh</span><strong>Phùng Minh Thành</strong></div>
+            <div class="profile-row"><span>Lớp</span><strong>12A2</strong></div>
+            <div class="profile-row"><span>Khóa / Trường</span><strong>60 · THPT Yên Lãng</strong></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="countdown-wrap container" id="dem-nguoc" aria-labelledby="countdown-title">
+      <div class="countdown">
+        <div>
+          <div class="label">Mốc thời gian tham khảo</div>
+          <h2 id="countdown-title">Cùng đếm ngược đến kỳ thi tốt nghiệp THPT</h2>
+          <p id="exam-date-label">Ngày thi dự kiến: 11/06/2027 · Lịch chính thức có thể thay đổi.</p>
+        </div>
+        <div class="timer" aria-live="polite" aria-label="Thời gian đếm ngược">
+          <div class="time-box"><strong id="days">---</strong><span>Ngày</span></div>
+          <div class="time-box"><strong id="hours">--</strong><span>Giờ</span></div>
+          <div class="time-box"><strong id="minutes">--</strong><span>Phút</span></div>
+          <div class="time-box"><strong id="seconds">--</strong><span>Giây</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="thu-vien" aria-labelledby="library-title">
+      <div class="section-heading">
+        <div><div class="label">Đọc · hiểu · ghi nhớ</div><h2 id="library-title">Thư viện tác phẩm</h2><p>Các văn bản đọc tiêu biểu trong Ngữ văn 12, bộ <em>Kết nối tri thức với cuộc sống</em>. Chọn tập sách, thể loại hoặc tìm nhanh theo tên tác phẩm và tác giả.</p></div>
+      </div>
+      <div class="toolbar">
+        <label class="search-box"><input type="search" id="search-input" placeholder="Tìm tác phẩm, tác giả, nội dung..." aria-label="Tìm kiếm tác phẩm"></label>
+        <select id="volume-select" aria-label="Lọc theo tập sách"><option value="all">Cả hai tập</option><option value="1">Tập 1</option><option value="2">Tập 2</option></select>
+        <select id="genre-select" aria-label="Lọc theo thể loại"><option value="all">Mọi thể loại</option><option value="Truyện, tiểu thuyết">Truyện / tiểu thuyết</option><option value="Thơ">Thơ</option><option value="Kịch">Kịch</option><option value="Nghị luận, kí, thông tin">Nghị luận / kí / thông tin</option></select>
+      </div>
+      <div class="filter-chips" aria-label="Lọc nhanh theo tập">
+        <button class="chip active" data-volume="all">Tất cả</button><button class="chip" data-volume="1">Tập 1</button><button class="chip" data-volume="2">Tập 2</button>
+      </div>
+      <div class="results-line"><span id="result-count">Đang hiển thị các văn bản</span><span class="small-note">Mở các thẻ để ôn bốn ý chính</span></div>
+      <div class="works-grid" id="works-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="study-section" id="on-luyen" aria-labelledby="study-title">
+      <div class="container study-layout">
+        <div class="study-intro">
+          <div class="label">Tự kiểm tra kiến thức</div>
+          <h2 id="study-title">Ôn một chút,<br>nhớ lâu hơn.</h2>
+          <p>Trả lời các câu hỏi trắc nghiệm ngắn về tác giả, tác phẩm và đặc sắc nghệ thuật. Sau mỗi câu, bạn sẽ biết đáp án và lời giải thích.</p>
+          <div class="study-tip"><strong>Mẹo ôn tập:</strong> Hãy thử tự trả lời trước khi chọn đáp án. Việc nhớ lại chủ động giúp kiến thức bền hơn.</div>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-progress"><span id="question-number">Câu 1 / 10</span><span id="score-display">Điểm: 0</span></div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <p class="quiz-question" id="quiz-question"></p>
+          <div class="answers" id="answers"></div>
+          <div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div>
+          <div class="quiz-controls"><span class="quiz-score" id="quiz-hint">Chọn một đáp án để tiếp tục.</span><button class="primary-btn" id="next-question" disabled>Câu tiếp theo</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner"><div>Trang Văn 12 · Không gian học tập của Phùng Minh Thành</div><div class="source-note">Danh mục đối chiếu mục lục SGK Ngữ văn 12 Kết nối tri thức · <a href="https://giaokhoaonline.com/ngu-van-lop-12-tap-1-ket-noi-tri-thuc/" target="_blank" rel="noopener">Tập 1</a> · <a href="https://giaokhoaonline.com/ngu-van-lop-12-tap-2-ket-noi-tri-thuc/" target="_blank" rel="noopener">Tập 2</a> · Ngày thi là mốc dự kiến tham khảo.</div></div>
+  </footer>
+
+  <script>
+    // Ngày dự kiến; có thể sửa khi Bộ GD&ĐT công bố lịch thi chính thức.
+    const EXAM_DATE = new Date('2027-06-11T07:30:00+07:00');
+    const works = [
+      { title:'Xuân Tóc Đỏ cứu quốc', author:'Vũ Trọng Phụng', volume:1, genre:'Truyện, tiểu thuyết', work:'Trích tiểu thuyết trào phúng Số đỏ, kể màn Xuân Tóc Đỏ được tung hô khi tham gia một sự kiện thể thao.', art:'Trần thuật linh hoạt, tạo tình huống nghịch lí; phóng đại, nói mỉa và giọng văn châm biếm sắc sảo.', meaning:'Phơi bày xã hội Âu hóa lố lăng, nơi giá trị thật bị đảo lộn và một kẻ cơ hội có thể thành “anh hùng”.' },
+      { title:'Nỗi buồn chiến tranh', author:'Bảo Ninh', volume:1, genre:'Truyện, tiểu thuyết', work:'Trích tiểu thuyết cùng tên, khai thác kí ức hậu chiến và những ám ảnh của người lính Kiên.', art:'Dòng hồi ức đứt nối, kết cấu phi tuyến, điểm nhìn nội tâm và giọng kể giàu suy tư.', meaning:'Nhìn chiến tranh qua mất mát, tổn thương và khát vọng được sống đời bình thường; nhấn mạnh sức nặng dai dẳng của kí ức.' },
+      { title:'Trên xuồng cứu nạn', author:'Yann Martel', volume:1, genre:'Truyện, tiểu thuyết', work:'Trích Cuộc đời của Pi, kể hành trình sinh tồn giữa biển khơi của cậu bé Pi trên xuồng cứu nạn.', art:'Ngôi kể thứ nhất, tình huống phiêu lưu giàu kịch tính, đan xen hiện thực với biểu tượng và suy tưởng.', meaning:'Ca ngợi ý chí sinh tồn, trí tưởng tượng và niềm tin giúp con người vượt qua nghịch cảnh.' },
+      { title:'Cảm hoài', author:'Đặng Dung', volume:1, genre:'Thơ', work:'Bài thơ chữ Hán trong Nỗi lòng, thể hiện nỗi ưu tư của một danh tướng trước vận nước và thời cuộc.', art:'Thể thất ngôn bát cú Đường luật, hình ảnh cô đọng, giọng thơ bi tráng và những đối lập giàu sức gợi.', meaning:'Bộc lộ lòng yêu nước, chí lớn cứu đời cùng nỗi đau khi hoài bão chưa thành.' },
+      { title:'Tây Tiến', author:'Quang Dũng', volume:1, genre:'Thơ', work:'Bài thơ viết về đoàn quân Tây Tiến và miền Tây hùng vĩ trong những năm đầu kháng chiến chống Pháp.', art:'Bút pháp lãng mạn, ngôn ngữ giàu nhạc họa, phối hợp vẻ dữ dội với nét thơ mộng và giọng điệu bi tráng.', meaning:'Khắc họa thiên nhiên miền Tây và hình tượng người lính trẻ hào hoa, can trường, sẵn sàng hiến dâng.' },
+      { title:'Đàn ghi ta của Lor-ca', author:'Thanh Thảo', volume:1, genre:'Thơ', work:'Bài thơ tượng trưng viết về nhà thơ, nhạc sĩ Federico García Lorca và tiếng đàn tự do của ông.', art:'Thơ tự do, hình ảnh siêu thực, biểu tượng tiếng đàn, nhạc tính và sự chuyển đổi cảm giác.', meaning:'Tưởng niệm Lorca, ngợi ca khát vọng cách tân nghệ thuật và xót thương số phận người nghệ sĩ bị bạo lực vùi dập.' },
+      { title:'Bài thơ số 28', author:'Ra-bin-đra-nát Ta-go', volume:1, genre:'Thơ', work:'Bài thơ trữ tình trong tập Người làm vườn, suy ngẫm về tình yêu và thế giới nội tâm của con người.', art:'Hình ảnh giàu tính biểu tượng, giọng tâm tình triết lí, cấu trúc như một lời độc thoại giàu cảm xúc.', meaning:'Diễn tả tình yêu chân thành, tôn trọng tự do và vẻ bí ẩn không thể chiếm hữu của tâm hồn người khác.' },
+      { title:'Nhìn về vốn văn hóa dân tộc', author:'Trần Đình Hượu', volume:1, genre:'Nghị luận, kí, thông tin', work:'Văn bản nghị luận bàn về những nét nổi bật và cách tiếp nhận các giá trị của văn hóa Việt Nam.', art:'Lập luận mạch lạc, thao tác phân tích và so sánh; cách nhìn khái quát nhưng có sắc thái phản biện.', meaning:'Gợi suy nghĩ về bản sắc văn hóa dân tộc, ưu điểm, giới hạn và thái độ tiếp thu văn hóa bên ngoài.' },
+      { title:'Năng lực sáng tạo', author:'Phan Đình Diệu', volume:1, genre:'Nghị luận, kí, thông tin', work:'Văn bản bàn về bản chất, điều kiện và vai trò của năng lực sáng tạo trong đời sống.', art:'Lí lẽ chặt chẽ, khái niệm rõ, kết hợp giải thích với phân tích và dẫn chứng.', meaning:'Khẳng định sáng tạo là năng lực có thể nuôi dưỡng bằng tri thức, tự do tư duy và môi trường khuyến khích đổi mới.' },
+      { title:'Mấy ý nghĩ về thơ', author:'Nguyễn Đình Thi', volume:1, genre:'Nghị luận, kí, thông tin', work:'Tiểu luận trình bày những suy nghĩ về thơ, cảm xúc thơ và quá trình sáng tạo nghệ thuật.', art:'Kết hợp lí luận với trải nghiệm sáng tác, cách diễn đạt giàu hình ảnh và nhịp điệu.', meaning:'Nhấn mạnh thơ bắt nguồn từ rung động chân thật, đồng thời được tổ chức bằng ngôn từ và hình thức nghệ thuật.' },
+      { title:'Cảm hứng và sáng tạo', author:'Nguyễn Trần Bạt', volume:1, genre:'Nghị luận, kí, thông tin', work:'Văn bản đọc thêm suy ngẫm về cảm hứng, tư duy và khả năng sáng tạo của con người.', art:'Lập luận giải thích, khái quát hóa vấn đề, giọng văn giàu chất suy tưởng.', meaning:'Khuyến khích nuôi dưỡng động lực bên trong, tinh thần độc lập và sự chủ động trong lao động sáng tạo.' },
+      { title:'Hải khẩu linh từ', author:'Đoàn Thị Điểm', volume:1, genre:'Truyện, tiểu thuyết', work:'Trích Truyền kì tân phả, kể chuyện đền thiêng cửa biển và những yếu tố kì ảo gắn với nhân vật nữ.', art:'Đặc trưng truyền kì: đan xen thực - ảo, mô típ linh ứng, lời kể trang trọng và chi tiết huyền ảo.', meaning:'Thể hiện niềm tin dân gian, sự tôn vinh phẩm hạnh và khát vọng công lí, bình an.' },
+      { title:'Muối của rừng', author:'Nguyễn Huy Thiệp', volume:1, genre:'Truyện, tiểu thuyết', work:'Truyện ngắn kể chuyến đi săn của ông Diểu, từ đó mở ra sự thức tỉnh trước sinh linh và thiên nhiên.', art:'Tình huống giàu tính biểu tượng, chi tiết chọn lọc, giọng kể tỉnh táo và kết thúc gợi nhiều suy ngẫm.', meaning:'Đặt con người trước trách nhiệm với tự nhiên; gợi lòng trắc ẩn, sự ăn năn và khả năng đổi thay.' },
+      { title:'Bến trần gian', author:'Lưu Sơn Minh', volume:1, genre:'Truyện, tiểu thuyết', work:'Văn bản thực hành đọc khai thác ranh giới giữa đời sống thực tại, kí ức và những yếu tố huyền ảo.', art:'Không khí kì ảo, chi tiết biểu tượng, kết cấu gợi mở giúp hiện thực và tâm linh soi chiếu lẫn nhau.', meaning:'Gợi suy ngẫm về thân phận, mất mát và những giá trị nhân tình trong cuộc sống.' },
+      { title:'Nhân vật quan trọng', author:'Nikolai Gogol', volume:1, genre:'Kịch', work:'Trích hài kịch Quan thanh tra, xoay quanh sự nhầm lẫn và nỗi hoảng sợ của giới chức địa phương.', art:'Tình huống hiểu lầm, đối thoại giàu nhịp điệu, phóng đại và xây dựng tính cách qua hành động.', meaning:'Châm biếm thói quan liêu, tham nhũng, xu nịnh và nỗi sợ bị phơi bày của bộ máy quyền lực.' },
+      { title:'Giấu của', author:'Lộng Chương', volume:1, genre:'Kịch', work:'Trích hài kịch Quẫn, khai thác thói keo kiệt và nỗi ám ảnh giữ của trong gia đình.', art:'Xung đột kịch, lời thoại gây cười, tình huống trớ trêu và tính cách được đẩy đến mức hài hước.', meaning:'Phê phán lòng tham, lối sống ích kỉ; tiếng cười hướng tới sự thức tỉnh và điều chỉnh cách sống.' },
+      { title:'Cẩn thận hão', author:'Bô-mác-se', volume:1, genre:'Kịch', work:'Trích vở hài kịch Thợ cạo thành Xê-vin, với nhân vật và những toan tính tạo nên chuỗi tình huống gây cười.', art:'Nhịp kịch nhanh, đối thoại linh hoạt, mưu mẹo và sự đảo chiều tạo tiếng cười sân khấu.', meaning:'Đề cao trí thông minh, sự tháo vát và phê phán thói giả dối, áp đặt.' },
+      { title:'Tuyên ngôn Độc lập', author:'Hồ Chí Minh', volume:2, genre:'Nghị luận, kí, thông tin', work:'Văn kiện khai sinh nước Việt Nam Dân chủ Cộng hòa, công bố ngày 2/9/1945.', art:'Lập luận pháp lí và thực tiễn chặt chẽ, dẫn chứng xác đáng, kết cấu ba phần, giọng văn đanh thép.', meaning:'Khẳng định quyền độc lập, tự do của dân tộc Việt Nam; tuyên bố chấm dứt chế độ thực dân và kêu gọi quốc tế công nhận.' },
+      { title:'Mộ (Chiều tối)', author:'Hồ Chí Minh', volume:2, genre:'Thơ', work:'Bài thơ trong Nhật kí trong tù, ghi lại bức tranh chiều tối và nhịp sống lao động nơi xóm núi.', art:'Thể thất ngôn tứ tuyệt, bút pháp cổ điển kết hợp hiện đại, vận động hình ảnh từ buồn vắng đến ấm sáng.', meaning:'Thể hiện tình yêu thiên nhiên, sự quan tâm đến con người lao động và tinh thần lạc quan.' },
+      { title:'Nguyên tiêu (Rằm tháng Giêng)', author:'Hồ Chí Minh', volume:2, genre:'Thơ', work:'Bài thơ viết về đêm rằm xuân trên sông nước, giữa không gian đất nước đang kháng chiến.', art:'Thể thất ngôn tứ tuyệt chữ Hán, hình ảnh khoáng đạt, chất cổ điển hòa với tinh thần thời đại.', meaning:'Khắc họa tâm hồn thi sĩ yêu thiên nhiên và phong thái ung dung của người chiến sĩ lo việc nước.' },
+      { title:'Ngắm trăng (Vọng nguyệt)', author:'Hồ Chí Minh', volume:2, genre:'Thơ', work:'Bài thơ trong Nhật kí trong tù, kể cuộc gặp gỡ tinh thần giữa người tù và ánh trăng.', art:'Thể tứ tuyệt, phép đối và nhân hóa; tình huống thi sĩ giao hòa với thiên nhiên qua song sắt.', meaning:'Làm nổi bật tình yêu trăng, phong thái tự do trong tâm hồn và nghị lực vượt hoàn cảnh tù đày.' },
+      { title:'Cảnh khuya', author:'Hồ Chí Minh', volume:2, genre:'Thơ', work:'Bài thơ viết về cảnh đêm trăng nơi chiến khu Việt Bắc và nỗi lo việc nước.', art:'Thể thất ngôn tứ tuyệt, so sánh tiếng suối, hình ảnh trăng sáng và sự kết hợp cảnh - tình.', meaning:'Vẻ đẹp tâm hồn yêu thiên nhiên, đồng thời thể hiện trách nhiệm và nỗi thao thức vì đất nước.' },
+      { title:'Nghệ thuật băm thịt gà', author:'Ngô Tất Tố', volume:2, genre:'Nghị luận, kí, thông tin', work:'Trích Việc làng, ghi lại một hủ tục ở nông thôn và những hệ lụy của nó đối với người dân.', art:'Bút kí hiện thực, chi tiết cụ thể, giọng kể sắc sảo và lối châm biếm kín đáo.', meaning:'Tố cáo hủ tục, cường hào và gánh nặng đè lên người nghèo; thể hiện tinh thần nhân đạo và cải cách.' },
+      { title:'Bước vào đời', author:'Đào Duy Anh', volume:2, genre:'Nghị luận, kí, thông tin', work:'Trích hồi kí Nhớ nghĩ chiều hôm, ghi lại những trải nghiệm và suy nghĩ của tác giả khi bước vào cuộc sống.', art:'Hồi kí kết hợp tự sự với suy ngẫm, giọng kể chân thực, giàu dấu ấn cá nhân.', meaning:'Gợi những bài học về lựa chọn, nghị lực và cách người trẻ đối diện với những bước ngoặt cuộc đời.' },
+      { title:'Vĩ tuyến 17', author:'Xuân Phương', volume:2, genre:'Nghị luận, kí, thông tin', work:'Trích Gánh gánh… gồng gồng…, ghi lại kí ức và trải nghiệm gắn với vùng đất giới tuyến.', art:'Kí giàu chất hồi ức, chi tiết đời sống cụ thể, giọng kể chân thực và giàu cảm xúc.', meaning:'Khắc họa đau thương do chia cắt, sức chịu đựng và tình cảm bền bỉ của con người trong chiến tranh.' },
+      { title:'Văn bản về khí hậu và biến đổi khí hậu', author:'Tác giả và nhan đề cần đối chiếu bản SGK', volume:2, genre:'Nghị luận, kí, thông tin', work:'Văn bản thông tin trong phần đọc, bàn về khí hậu và hiện tượng biến đổi khí hậu.', art:'Trình bày thông tin theo hướng giải thích, đối chiếu khái niệm và sử dụng dữ kiện để làm rõ vấn đề.', meaning:'Giúp nhận diện biến đổi khí hậu như vấn đề đáng quan tâm và gợi ý thức trách nhiệm với môi trường.' },
+      { title:'Đời muối', author:'Mark Kurlansky', volume:2, genre:'Nghị luận, kí, thông tin', work:'Trích Đời muối: Lịch sử thế giới, khảo sát vai trò của muối trong lịch sử và đời sống con người.', art:'Văn bản thông tin kết hợp dữ liệu, ví dụ lịch sử và lối kể giàu chi tiết.', meaning:'Cho thấy một vật dụng quen thuộc có thể gắn với thương mại, quyền lực, văn hóa và biến động lịch sử.' },
+      { title:'Sách thay đổi lịch sử loài người', author:'Vũ Đức Liêm', volume:2, genre:'Nghị luận, kí, thông tin', work:'Văn bản thực hành đọc bàn về vai trò của sách và tri thức trong tiến trình lịch sử nhân loại.', art:'Thuyết minh kết hợp khái quát lịch sử, dẫn chứng và lập luận nhằm làm nổi bật sức lan tỏa của tri thức.', meaning:'Khẳng định sách góp phần lưu giữ, truyền bá tri thức và thúc đẩy những biến đổi xã hội.' },
+      { title:'Vội vàng', author:'Xuân Diệu', volume:2, genre:'Thơ', work:'Bài thơ tiêu biểu trong tập Thơ thơ, thể hiện khát vọng tận hưởng vẻ đẹp trần thế và tuổi trẻ.', art:'Thể thơ tự do, nhịp điệu sôi nổi, hình ảnh mới lạ, điệp ngữ và hệ thống cảm giác giàu sức gợi.', meaning:'Bộc lộ tình yêu cuộc sống mãnh liệt, ý thức về thời gian hữu hạn và lời giục giã sống trọn vẹn.' },
+      { title:'Trở về', author:'Ernest Hemingway', volume:2, genre:'Truyện, tiểu thuyết', work:'Trích Ông già và biển cả, gắn với hành trình trở về sau cuộc vật lộn của ông lão Santiago.', art:'Lối viết cô đọng, đối thoại tiết chế, hình ảnh biểu tượng và nguyên lí “tảng băng trôi”.', meaning:'Gợi phẩm giá, nghị lực và sự bền bỉ của con người trước thử thách, kể cả khi kết quả vật chất không như mong đợi.' },
+      { title:'Hồn Trương Ba, da hàng thịt', author:'Lưu Quang Vũ', volume:2, genre:'Kịch', work:'Trích vở kịch cùng tên, tập trung vào bi kịch sống nhờ thân xác người khác của Trương Ba.', art:'Xung đột kịch giàu tính triết lí, đối thoại sắc nét, tình huống giả tưởng làm nổi bật xung đột nội tâm.', meaning:'Đặt vấn đề về sự thống nhất giữa hồn và xác, khát vọng sống là chính mình và giá trị của một cuộc sống chân thực.' },
+      { title:'Khúc đồng quê', author:'Đặng Thị Hạnh', volume:2, genre:'Nghị luận, kí, thông tin', work:'Trích Cô bé nhìn mưa, gợi lại không gian đồng quê qua kí ức và cảm nhận cá nhân.', art:'Tùy bút giàu chất trữ tình, hình ảnh gợi cảm, đan xen miêu tả với hồi tưởng.', meaning:'Khơi gợi tình yêu quê hương, vẻ đẹp bình dị của thiên nhiên và sức sống của kí ức.' }
+    ];
+
+    const grid = document.getElementById('works-grid');
+    const searchInput = document.getElementById('search-input');
+    const volumeSelect = document.getElementById('volume-select');
+    const genreSelect = document.getElementById('genre-select');
+    let activeVolume = 'all';
+
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function renderWorks() {
+      const query = searchInput.value.trim().toLocaleLowerCase('vi');
+      const chosenVolume = volumeSelect.value !== 'all' ? volumeSelect.value : activeVolume;
+      const chosenGenre = genreSelect.value;
+      const filtered = works.filter(item => {
+        const haystack = `${item.title} ${item.author} ${item.work} ${item.art} ${item.meaning}`.toLocaleLowerCase('vi');
+        return (chosenVolume === 'all' || String(item.volume) === chosenVolume) &&
+          (chosenGenre === 'all' || item.genre === chosenGenre) && (!query || haystack.includes(query));
+      });
+      document.getElementById('result-count').textContent = `Hiển thị ${filtered.length} / ${works.length} văn bản`;
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="empty-state">Chưa tìm thấy văn bản phù hợp. Thử từ khóa khác nhé.</div>';
+        return;
+      }
+      grid.innerHTML = filtered.map(item => `
+        <article class="work-card">
+          <div class="work-top"><div><h3 class="work-title">${escapeHTML(item.title)}</h3><p class="author-line">${escapeHTML(item.author)}</p></div><span class="volume-tag">Tập ${item.volume}</span></div>
+          <div class="work-meta">
+            <div class="meta-item"><strong>Tác phẩm</strong>${escapeHTML(item.work)}</div>
+            <div class="meta-item"><strong>Nghệ thuật / cách thể hiện</strong>${escapeHTML(item.art)}</div>
+            <div class="meta-item"><strong>Nội dung, ý nghĩa</strong>${escapeHTML(item.meaning)}</div>
+          </div>
+        </article>`).join('');
+    }
+    searchInput.addEventListener('input', renderWorks);
+    volumeSelect.addEventListener('change', () => {
+      activeVolume = 'all';
+      document.querySelectorAll('.chip').forEach(chip => chip.classList.toggle('active', chip.dataset.volume === 'all'));
+      renderWorks();
+    });
+    genreSelect.addEventListener('change', renderWorks);
+    document.querySelectorAll('.chip').forEach(chip => chip.addEventListener('click', () => {
+      activeVolume = chip.dataset.volume;
+      volumeSelect.value = 'all';
+      document.querySelectorAll('.chip').forEach(other => other.classList.toggle('active', other === chip));
+      renderWorks();
+    }));
+    renderWorks();
+
+    function updateCountdown() {
+      const remaining = EXAM_DATE.getTime() - Date.now();
+      if (remaining <= 0) {
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '00';
+        document.getElementById('minutes').textContent = '00';
+        document.getElementById('seconds').textContent = '00';
+        document.getElementById('exam-date-label').textContent = 'Mốc ngày dự kiến đã đến. Hãy cập nhật ngày thi mới nếu lịch chính thức thay đổi.';
+        return;
+      }
+      const day = 86400000, hour = 3600000, minute = 60000;
+      document.getElementById('days').textContent = Math.floor(remaining / day);
+      document.getElementById('hours').textContent = String(Math.floor((remaining % day) / hour)).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(Math.floor((remaining % hour) / minute)).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(Math.floor((remaining % minute) / 1000)).padStart(2, '0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const questions = [
+      { q:'Tác giả của bài thơ “Tây Tiến” là ai?', a:['Quang Dũng','Thanh Thảo','Xuân Diệu','Đặng Dung'], correct:0, explain:'Quang Dũng sáng tác “Tây Tiến”, bài thơ khắc họa thiên nhiên miền Tây và người lính Tây Tiến.' },
+      { q:'“Đàn ghi ta của Lor-ca” gắn với hình tượng người nghệ sĩ nào?', a:['Pablo Neruda','Federico García Lorca','Ernest Hemingway','Rabindranath Tagore'], correct:1, explain:'Thanh Thảo viết bài thơ tưởng niệm Federico García Lorca, nhà thơ và nhạc sĩ Tây Ban Nha.' },
+      { q:'“Muối của rừng” là truyện ngắn của nhà văn nào?', a:['Bảo Ninh','Nguyễn Huy Thiệp','Lưu Sơn Minh','Ngô Tất Tố'], correct:1, explain:'“Muối của rừng” là truyện ngắn của Nguyễn Huy Thiệp, gợi suy ngẫm về con người và tự nhiên.' },
+      { q:'Tác phẩm “Hồn Trương Ba, da hàng thịt” thuộc thể loại nào?', a:['Truyện truyền kì','Thơ tự do','Kịch','Bút kí'], correct:2, explain:'Đây là vở kịch của Lưu Quang Vũ; đoạn trích đặt ra xung đột giữa hồn và xác.' },
+      { q:'Bài thơ “Vội vàng” thể hiện nổi bật khát vọng nào?', a:['Ẩn dật xa lánh cuộc đời','Tận hưởng vẻ đẹp cuộc sống và tuổi trẻ','Tìm về quá khứ chiến tranh','Ca ngợi chiến công của người lính'], correct:1, explain:'Xuân Diệu bộc lộ tình yêu đời mãnh liệt, ý thức về thời gian và khát vọng sống trọn vẹn.' },
+      { q:'“Tuyên ngôn Độc lập” được Hồ Chí Minh đọc vào ngày nào?', a:['19/8/1945','2/9/1945','7/5/1954','30/4/1975'], correct:1, explain:'Bản Tuyên ngôn Độc lập được công bố tại Quảng trường Ba Đình ngày 2/9/1945.' },
+      { q:'Đặc điểm nổi bật trong nghệ thuật của “Xuân Tóc Đỏ cứu quốc” là gì?', a:['Giọng trào phúng và tình huống nghịch lí','Ngôn ngữ ước lệ tượng trưng','Độc thoại nội tâm trữ tình','Kết cấu sử thi anh hùng'], correct:0, explain:'Vũ Trọng Phụng dùng tình huống nghịch lí, phóng đại và giọng châm biếm để phơi bày xã hội giả dối.' },
+      { q:'“Ngắm trăng” (Vọng nguyệt) được sáng tác bởi ai?', a:['Hồ Chí Minh','Nguyễn Đình Thi','Đặng Dung','Xuân Diệu'], correct:0, explain:'“Ngắm trăng” là bài thơ chữ Hán trong tập Nhật kí trong tù của Hồ Chí Minh.' },
+      { q:'Nhà thơ nào viết “Cảm hoài” trong chùm văn bản học tập?', a:['Đặng Dung','Quang Dũng','Nguyễn Ái Quốc','Ta-go'], correct:0, explain:'“Cảm hoài” (Nỗi lòng) là bài thơ chữ Hán của Đặng Dung.' },
+      { q:'Trong “Tây Tiến”, hình tượng trung tâm được khắc họa là ai?', a:['Người nông dân thời bình','Người lính Tây Tiến','Người nghệ sĩ Lorca','Ông lão đánh cá'], correct:1, explain:'Bài thơ tái hiện đoàn quân Tây Tiến với vẻ đẹp hào hoa, bi tráng giữa núi rừng miền Tây.' }
+    ];
+    let questionIndex = 0;
+    let score = 0;
+    let answered = false;
+    const questionEl = document.getElementById('quiz-question');
+    const answersEl = document.getElementById('answers');
+    const feedbackEl = document.getElementById('quiz-feedback');
+    const nextBtn = document.getElementById('next-question');
+    function renderQuestion() {
+      const item = questions[questionIndex];
+      answered = false;
+      document.getElementById('question-number').textContent = `Câu ${questionIndex + 1} / ${questions.length}`;
+      document.getElementById('score-display').textContent = `Điểm: ${score}`;
+      document.getElementById('progress-fill').style.width = `${(questionIndex / questions.length) * 100}%`;
+      questionEl.textContent = item.q;
+      feedbackEl.textContent = '';
+      document.getElementById('quiz-hint').textContent = 'Chọn một đáp án để xem giải thích.';
+      nextBtn.disabled = true;
+      nextBtn.textContent = questionIndex === questions.length - 1 ? 'Xem kết quả' : 'Câu tiếp theo';
+      answersEl.innerHTML = item.a.map((answer, index) => `<button class="answer-btn" data-index="${index}">${String.fromCharCode(65 + index)}. ${escapeHTML(answer)}</button>`).join('');
+      answersEl.querySelectorAll('.answer-btn').forEach(button => button.addEventListener('click', () => chooseAnswer(Number(button.dataset.index))));
+    }
+    function chooseAnswer(selected) {
+      if (answered) return;
+      answered = true;
+      const item = questions[questionIndex];
+      const buttons = [...answersEl.querySelectorAll('.answer-btn')];
+      buttons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === item.correct) button.classList.add('correct');
+        else if (index === selected) button.classList.add('wrong');
+      });
+      const isCorrect = selected === item.correct;
+      if (isCorrect) score++;
+      feedbackEl.textContent = `${isCorrect ? 'Chính xác! ' : 'Chưa đúng. '}${item.explain}`;
+      feedbackEl.style.color = isCorrect ? '#4c6f50' : '#a34c4c';
+      document.getElementById('score-display').textContent = `Điểm: ${score}`;
+      document.getElementById('quiz-hint').textContent = isCorrect ? 'Bạn đã trả lời đúng.' : 'Hãy ghi nhớ lời giải thích ở trên.';
+      nextBtn.disabled = false;
+    }
+    nextBtn.addEventListener('click', () => {
+      if (questionIndex < questions.length - 1) {
+        questionIndex++;
+        renderQuestion();
+      } else {
+        questionEl.textContent = `Bạn hoàn thành lượt ôn tập với ${score} / ${questions.length} câu đúng.`;
+        answersEl.innerHTML = '';
+        feedbackEl.textContent = score >= 8 ? 'Rất tốt! Bạn đã nắm khá chắc các kiến thức này.' : 'Hãy xem lại thư viện tác phẩm rồi thử làm lại để củng cố kiến thức.';
+        feedbackEl.style.color = '#4c6f50';
+        document.getElementById('question-number').textContent = 'Hoàn thành';
+        document.getElementById('progress-fill').style.width = '100%';
+        document.getElementById('quiz-hint').textContent = 'Làm lại bộ câu hỏi để luyện thêm.';
+        nextBtn.textContent = 'Làm lại';
+        nextBtn.disabled = false;
+        nextBtn.onclick = () => { questionIndex = 0; score = 0; nextBtn.onclick = null; renderQuestion(); };
+      }
+    });
+    renderQuestion();
+  </script>
+</body>
+</html>
